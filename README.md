@@ -80,7 +80,7 @@ LitePrefs.putToMap(p.key,p);
 ```
 ### 5.Exteneds LitePrefs
 LitePrefs use *singleton*,so there is a Special base class to extend:*BaseLitePrefs*
-<br>I use LitePrefs like this in my note app [PureNote](https://github.com/duanze/PureNote):
+<br>I use it in my note app [PureNote](https://github.com/duanze/PureNote):
 ```
 public class MyLitePrefs extends BaseLitePrefs {
 
@@ -107,9 +107,9 @@ public class MyLitePrefs extends BaseLitePrefs {
 
 ### 6.Shortages that compared with SharedPreferences
 - Don't support data type Set&lt;String&gt; and its methods
-- Don't support litsener
+- Don't support listener
 - Don't support apply() and chain put calls together
-- Don't have method contains(String) and getAll()
+- Don't have contains(String) and getAll()
 <br>Actually,I don't mind the all above at present.
 
 # Sample in app
