@@ -1,6 +1,18 @@
 # LitePreferences
 To simplify the use of SharedPreferences in Android.
+<br>So you can
+```
+LitePrefs.getString("preference_key");
 
+LitePrefs.putString("preference_key", "new value");
+```
+rather than
+```
+SharedPreferences p = context.getSharedPreferences("liteprefs", Context.MODE_PRIVATE);
+p.getString("preference_key", "...");
+
+p.edit().putString("preference_key", "new value").commit();
+```
 # Document
 ### 1.Config xml file
 Creating the config xml file.
