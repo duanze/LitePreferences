@@ -9,7 +9,7 @@ LitePrefs.putString("preference_key", "new value");
 rather than
 ```
 SharedPreferences p = context.getSharedPreferences("liteprefs", Context.MODE_PRIVATE);
-p.getString("preference_key", "...");
+p.getString("preference_key", "default value");
 
 p.edit().putString("preference_key", "new value").commit();
 ```
