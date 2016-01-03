@@ -77,6 +77,9 @@ try {
 } catch (IOException | XmlPullParserException e) {
      e.printStackTrace()
 }
+
+// optional, if don't configure it ,the default is commit()
+LitePrefs.setEditMode(LitePrefs.MODE_APPLY);
 ```
 ### 3.Use LitePrefs everywhere
 Now you can use the SharedPreferences named "liteprefs" easily like this everywhere:
@@ -94,11 +97,12 @@ Maybe you prefer to using java codes:
 ```
 // Prepare data source
 Map<String,Pref> map = new HashMap<>();
+// put <key,pref> in the map
 map.put("float_key",new Pref("float_key",0.222f));
 map.put("str",new Pref("str","LitePrefs!"));
 ...
-
-LitePrefs.initFromMap(context,"liteprefs",map);
+String prefsName = "liteprefs";
+LitePrefs.initFromMap(context, prefsName, map);
 ```
  You can append data via this method:
 ```
@@ -106,7 +110,7 @@ Pref p = new Pref("new_pref",11111);
 LitePrefs.putToMap(p.key,p);
 ```
 ### 5.Exteneds LitePrefs
-LitePrefs use *singleton*,so there is a Special base class to extend:*BaseLitePrefs*
+LitePrefs use *singleton*,so there is a Special base class to extend:*BaseLitePrefs*, which is not a standard *singleton*.
 <br>I use it in my note app [PureNote](https://github.com/duanze/PureNote):
 ```
 public class MyLitePrefs extends BaseLitePrefs {
