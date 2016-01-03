@@ -27,7 +27,7 @@ import java.util.Set;
  * Created by Duanze on 15-11-19.
  */
 public class ActualUtil {
-
+    private int editMode = LitePrefs.MODE_COMMIT;
     private String name;
     private SharedPreferences mSharedPreferences;
     private Map<String, Pref> mMap;
@@ -39,6 +39,10 @@ public class ActualUtil {
 
     public void init(Context context) {
         mSharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+    }
+
+    public void setEditMode(int editMode) {
+        this.editMode = editMode;
     }
 
     public void putToMap(String key, Pref pref) {
@@ -122,6 +126,11 @@ public class ActualUtil {
         Pref pref = readyOperation(key);
         pref.queried = true;
         pref.setValue(value);
+
+        if (LitePrefs.MODE_APPLY == editMode) {
+            mSharedPreferences.edit().putInt(key, value).apply();
+            return true;
+        }
         return mSharedPreferences.edit().putInt(key, value).commit();
     }
 
@@ -130,6 +139,11 @@ public class ActualUtil {
         Pref pref = readyOperation(key);
         pref.queried = true;
         pref.setValue(value);
+
+        if (LitePrefs.MODE_APPLY == editMode) {
+            mSharedPreferences.edit().putLong(key, value).apply();
+            return true;
+        }
         return mSharedPreferences.edit().putLong(key, value).commit();
     }
 
@@ -139,6 +153,10 @@ public class ActualUtil {
         pref.queried = true;
         pref.setValue(value);
 
+        if (LitePrefs.MODE_APPLY == editMode) {
+            mSharedPreferences.edit().putFloat(key, value).apply();
+            return true;
+        }
         return mSharedPreferences.edit().putFloat(key, value).commit();
     }
 
@@ -147,6 +165,10 @@ public class ActualUtil {
         pref.queried = true;
         pref.setValue(value);
 
+        if (LitePrefs.MODE_APPLY == editMode) {
+            mSharedPreferences.edit().putBoolean(key, value).apply();
+            return true;
+        }
         return mSharedPreferences.edit().putBoolean(key, value).commit();
     }
 
@@ -155,6 +177,10 @@ public class ActualUtil {
         pref.queried = true;
         pref.setValue(value);
 
+        if (LitePrefs.MODE_APPLY == editMode) {
+            mSharedPreferences.edit().putString(key, value).apply();
+            return true;
+        }
         return mSharedPreferences.edit().putString(key, value).commit();
     }
 
@@ -162,6 +188,10 @@ public class ActualUtil {
         Pref pref = readyOperation(key);
         pref.queried = false;
 
+        if (LitePrefs.MODE_APPLY == editMode) {
+            mSharedPreferences.edit().remove(key).apply();
+            return true;
+        }
         return mSharedPreferences.edit().remove(key).commit();
     }
 
@@ -172,6 +202,10 @@ public class ActualUtil {
             pref.queried = false;
         }
 
+        if (LitePrefs.MODE_APPLY == editMode) {
+            mSharedPreferences.edit().clear().apply();
+            return true;
+        }
         return mSharedPreferences.edit().clear().commit();
     }
 

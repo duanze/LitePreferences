@@ -21,6 +21,8 @@ public interface LiteInterface {
 
     Map<String, Pref> getPrefsMapLite();
 
+    void setEditModeLite(int mode);
+
     void putToMapLite(String key, Pref pref);
 
     int getIntLite(String key);

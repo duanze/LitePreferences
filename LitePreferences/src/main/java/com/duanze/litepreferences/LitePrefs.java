@@ -29,6 +29,9 @@ import java.util.Map;
  * Created by Duanze on 2015/11/20.
  */
 public class LitePrefs implements LiteInterface {
+    public static final int MODE_COMMIT = 233;
+    public static final int MODE_APPLY = 234;
+
     private Context mContext;
     private static LitePrefs sMe;
     private ActualUtil mUtil;
@@ -74,6 +77,7 @@ public class LitePrefs implements LiteInterface {
      * @param res     the xml file resource id
      * @see #initFromMapLite(Context, String, Map)
      */
+    @Override
     public void initFromXmlLite(Context context, int res) throws IOException, XmlPullParserException {
         mContext = context;
         mUtil = ParsePrefsXml.parse(context.getResources().getXml(res));
@@ -108,6 +112,7 @@ public class LitePrefs implements LiteInterface {
      * @param map     the core data map
      * @see #initFromXmlLite(Context, int)
      */
+    @Override
     public void initFromMapLite(Context context, String name, Map<String, Pref> map) {
         mContext = context;
         mUtil = new ActualUtil(name, map);
@@ -134,6 +139,7 @@ public class LitePrefs implements LiteInterface {
      * @return the core data map
      * @see Pref
      */
+    @Override
     public Map<String, Pref> getPrefsMapLite() {
         checkValid();
         return mUtil.getPrefsMap();
@@ -159,9 +165,19 @@ public class LitePrefs implements LiteInterface {
      * @param key
      * @param pref
      */
+    @Override
     public void putToMapLite(String key, Pref pref) {
         checkValid();
         mUtil.putToMap(key, pref);
+    }
+
+    public static void setEditMode(int mode){
+        getLiteInterface().setEditModeLite(mode);
+    }
+
+    @Override
+    public void setEditModeLite(int mode) {
+        mUtil.setEditMode(mode);
     }
 
     private void checkValid() {
@@ -178,11 +194,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().getIntLite(key);
     }
 
+    @Override
     public int getIntLite(String key) {
         checkValid();
         return mUtil.getInt(key);
     }
 
+    @Override
     public int getIntLite(int keyRes) {
         checkValid();
         return mUtil.getInt(mContext.getString(keyRes));
@@ -196,11 +214,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().getLongLite(key);
     }
 
+    @Override
     public long getLongLite(String key) {
         checkValid();
         return mUtil.getLong(key);
     }
 
+    @Override
     public long getLongLite(int keyRes) {
         checkValid();
         return mUtil.getLong(mContext.getString(keyRes));
@@ -214,11 +234,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().getFloatLite(key);
     }
 
+    @Override
     public float getFloatLite(String key) {
         checkValid();
         return mUtil.getFloat(key);
     }
 
+    @Override
     public float getFloatLite(int keyRes) {
         checkValid();
         return mUtil.getFloat(mContext.getString(keyRes));
@@ -232,11 +254,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().getBooleanLite(key);
     }
 
+    @Override
     public boolean getBooleanLite(String key) {
         checkValid();
         return mUtil.getBoolean(key);
     }
 
+    @Override
     public boolean getBooleanLite(int keyRes) {
         checkValid();
         return mUtil.getBoolean(mContext.getString(keyRes));
@@ -250,11 +274,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().getStringLite(key);
     }
 
+    @Override
     public String getStringLite(String key) {
         checkValid();
         return mUtil.getString(key);
     }
 
+    @Override
     public String getStringLite(int keyRes) {
         checkValid();
         return mUtil.getString(mContext.getString(keyRes));
@@ -268,11 +294,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().putIntLite(key, value);
     }
 
+    @Override
     public boolean putIntLite(String key, int value) {
         checkValid();
         return mUtil.putInt(key, value);
     }
 
+    @Override
     public boolean putIntLite(int keyRes, int value) {
         checkValid();
         return mUtil.putInt(mContext.getString(keyRes), value);
@@ -286,11 +314,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().putLongLite(key, value);
     }
 
+    @Override
     public boolean putLongLite(String key, long value) {
         checkValid();
         return mUtil.putLong(key, value);
     }
 
+    @Override
     public boolean putLongLite(int keyRes, long value) {
         checkValid();
         return mUtil.putLong(mContext.getString(keyRes), value);
@@ -304,11 +334,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().putFloatLite(key, value);
     }
 
+    @Override
     public boolean putFloatLite(String key, float value) {
         checkValid();
         return mUtil.putFloat(key, value);
     }
 
+    @Override
     public boolean putFloatLite(int keyRes, float value) {
         checkValid();
         return mUtil.putFloat(mContext.getString(keyRes), value);
@@ -322,11 +354,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().putBooleanLite(key, value);
     }
 
+    @Override
     public boolean putBooleanLite(String key, boolean value) {
         checkValid();
         return mUtil.putBoolean(key, value);
     }
 
+    @Override
     public boolean putBooleanLite(int keyRes, boolean value) {
         checkValid();
         return mUtil.putBoolean(mContext.getString(keyRes), value);
@@ -340,11 +374,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().putStringLite(key, value);
     }
 
+    @Override
     public boolean putStringLite(String key, String value) {
         checkValid();
         return mUtil.putString(key, value);
     }
 
+    @Override
     public boolean putStringLite(int keyRes, String value) {
         checkValid();
         return mUtil.putString(mContext.getString(keyRes), value);
@@ -358,11 +394,13 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().removeLite(key);
     }
 
+    @Override
     public boolean removeLite(String key) {
         checkValid();
         return mUtil.remove(key);
     }
 
+    @Override
     public boolean removeLite(int keyRes) {
         checkValid();
         return mUtil.remove(mContext.getString(keyRes));
@@ -372,6 +410,7 @@ public class LitePrefs implements LiteInterface {
         return getLiteInterface().clearLite();
     }
 
+    @Override
     public boolean clearLite() {
         checkValid();
         return mUtil.clear();
