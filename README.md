@@ -1,18 +1,33 @@
 # LitePreferences
-To simplify the use of SharedPreferences in Android.
-<br>So you can
-```
-LitePrefs.getString("preference_key");
+### Why use this library?
 
+1.You can simplify the use of SharedPreferences:
+```
+// read
+LitePrefs.getString("preference_key");
+// write
 LitePrefs.putString("preference_key", "new value");
 ```
 rather than
 ```
+// get it
 SharedPreferences p = context.getSharedPreferences("liteprefs", Context.MODE_PRIVATE);
+// read
 p.getString("preference_key", "default value");
-
+// write
 p.edit().putString("preference_key", "new value").commit();
 ```
+
+2.You can just put your preference key in the strings.xml,because you can use them like this:
+```
+// read
+LitePrefs.getString(R.string.cool_key);
+// write
+LitePrefs.putString(R.string.cool_key,"it is cool");
+```
+
+3.It's support config file, just read the followings to get more infomations.
+
 # Document
 ### 1.Config xml file
 Creating the config xml file.
