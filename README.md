@@ -18,6 +18,8 @@ p.getString("preference_key", "default value");
 p.edit().putString("preference_key", "new value").commit();
 ```
 
+As you see,just initialize the LitePrefs once,you can read and write SharedPreferences everywhere.
+
 2.You can just put your preference key in the strings.xml,because you can use them like this:
 ```
 // read
