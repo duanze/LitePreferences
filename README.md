@@ -1,4 +1,7 @@
 # LitePreferences
+
+[设计解读](http://www.jianshu.com/p/64ef6eb7406f)
+
 ### Why use this library?
 
 1.You can simplify the use of SharedPreferences:
