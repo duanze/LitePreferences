@@ -13,7 +13,6 @@ import java.util.Map;
  * Created by Duanze on 15-11-22.
  */
 public interface LiteInterface {
-    LiteInterface getImpl();
 
     void initFromXmlLite(Context context, int res) throws IOException, XmlPullParserException;
 

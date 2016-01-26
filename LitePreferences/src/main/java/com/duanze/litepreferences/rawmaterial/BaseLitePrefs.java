@@ -16,6 +16,7 @@
 package com.duanze.litepreferences.rawmaterial;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.duanze.litepreferences.ActualUtil;
 import com.duanze.litepreferences.LiteInterface;
@@ -31,7 +32,7 @@ import java.util.Map;
  * Created by Duanze on 2015/11/20.
  */
 public class BaseLitePrefs implements LiteInterface {
-    protected static BaseLitePrefs sMe;
+    protected static volatile BaseLitePrefs sMe;
 
     protected Context mContext;
     protected ActualUtil mUtil;
@@ -41,16 +42,15 @@ public class BaseLitePrefs implements LiteInterface {
 
     }
 
-    @Override
-    public LiteInterface getImpl() {
-        return this;
-    }
-
     public static LiteInterface getLiteInterface() {
         if (null == sMe) {
-            sMe = new BaseLitePrefs();
+            synchronized (BaseLitePrefs.class) {
+                if (null == sMe) {
+                    sMe = new BaseLitePrefs();
+                }
+            }
         }
-        return sMe.getImpl();
+        return sMe;
     }
 
     /**
@@ -63,7 +63,7 @@ public class BaseLitePrefs implements LiteInterface {
      * @param res     the xml file resource id
      * @see #initFromMap(Context, String, Map)
      */
-    public static void initFromXml(Context context, int res) throws IOException, XmlPullParserException {
+    public static synchronized void initFromXml(Context context, int res) throws IOException, XmlPullParserException {
         getLiteInterface().initFromXmlLite(context, res);
     }
 
@@ -97,7 +97,7 @@ public class BaseLitePrefs implements LiteInterface {
      * @param map     the core data map
      * @see #initFromXml(Context, int)
      */
-    public static void initFromMap(Context context, String name, Map<String, Pref> map) {
+    public static synchronized void initFromMap(Context context, String name, Map<String, Pref> map) {
         getLiteInterface().initFromMapLite(context, name, map);
     }
 
@@ -147,7 +147,7 @@ public class BaseLitePrefs implements LiteInterface {
 
     /**
      * Add one key-value pair to the core data map.
-     * <p/>
+     * <p>
      * Be sure call it after LitePrefs is initialized.
      *
      * @param key
@@ -159,7 +159,7 @@ public class BaseLitePrefs implements LiteInterface {
 
     /**
      * Add one key-value pair to the core data map.
-     * <p/>
+     * <p>
      * Be sure call it after LitePrefs is initialized.
      *
      * @param key
@@ -171,7 +171,7 @@ public class BaseLitePrefs implements LiteInterface {
         mUtil.putToMap(key, pref);
     }
 
-    public static void setEditMode(int mode){
+    public static void setEditMode(int mode) {
         getLiteInterface().setEditModeLite(mode);
     }
 

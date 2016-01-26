@@ -144,7 +144,7 @@ public class MyLitePrefs extends BaseLitePrefs {
 ### 6.Shortages that compared with SharedPreferences
 - Don't support data type Set&lt;String&gt; and its methods
 - Don't support listener
-- Don't support apply() and chain put calls together
+- Don't support chain put calls together
 - Don't have contains(String) and getAll()
 <br>Actually,I don't mind the all above at present.
 

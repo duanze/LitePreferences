@@ -33,7 +33,7 @@ public class LitePrefs implements LiteInterface {
     public static final int MODE_APPLY = 234;
 
     private Context mContext;
-    private static LitePrefs sMe;
+    private static volatile LitePrefs sMe;
     private ActualUtil mUtil;
     private boolean valid = false;
 
@@ -41,16 +41,15 @@ public class LitePrefs implements LiteInterface {
 
     }
 
-    @Override
-    public LiteInterface getImpl() {
-        return this;
-    }
-
     public static LiteInterface getLiteInterface() {
         if (null == sMe) {
-            sMe = new LitePrefs();
+            synchronized (LitePrefs.class) {
+                if (null == sMe) {
+                    sMe = new LitePrefs();
+                }
+            }
         }
-        return sMe.getImpl();
+        return sMe;
     }
 
     /**
@@ -63,7 +62,7 @@ public class LitePrefs implements LiteInterface {
      * @param res     the xml file resource id
      * @see #initFromMap(Context, String, Map)
      */
-    public static void initFromXml(Context context, int res) throws IOException, XmlPullParserException {
+    public static synchronized void initFromXml(Context context, int res) throws IOException, XmlPullParserException {
         getLiteInterface().initFromXmlLite(context, res);
     }
 
@@ -97,7 +96,7 @@ public class LitePrefs implements LiteInterface {
      * @param map     the core data map
      * @see #initFromXml(Context, int)
      */
-    public static void initFromMap(Context context, String name, Map<String, Pref> map) {
+    public static synchronized void initFromMap(Context context, String name, Map<String, Pref> map) {
         getLiteInterface().initFromMapLite(context, name, map);
     }
 
@@ -171,7 +170,7 @@ public class LitePrefs implements LiteInterface {
         mUtil.putToMap(key, pref);
     }
 
-    public static void setEditMode(int mode){
+    public static void setEditMode(int mode) {
         getLiteInterface().setEditModeLite(mode);
     }
 
